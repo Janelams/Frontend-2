@@ -1,0 +1,9 @@
+#content {
+	padding-top: 60px;
+}
+section {
+	display:none;
+}
+section.active {
+	display:block;
+}
