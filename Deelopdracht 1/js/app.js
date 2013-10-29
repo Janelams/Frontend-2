@@ -3,67 +3,31 @@ var APP = APP || {};
 
 // Self-invoking anon function
 (function() {
-	
-	APP.game = {
-		title: 		'Game',
-		pageTitle: 	'Pool A - Score: Boomsquad vs. Burning Snow',
-		match:		[
-			{ team1: "Boomsquad", result: "15-8", team2: "Burning Snow" }
-		],
-		game:		[
-			{ score: "1", team1: "Boomsquad", team1Score: "1", team2: "Burning Snow", team2Score: "0"},
-			{ score: "2", team1: "Boomsquad", team1Score: "2", team2: "Burning Snow", team2Score: "0"},
-			{ score: "3", team1: "Boomsquad", team1Score: "2", team2: "Burning Snow", team2Score: "1"},
-			{ score: "4", team1: "Boomsquad", team1Score: "2", team2: "Burning Snow", team2Score: "2"},
-			{ score: "5", team1: "Boomsquad", team1Score: "3", team2: "Burning Snow", team2Score: "2"},
-			{ score: "6", team1: "Boomsquad", team1Score: "4", team2: "Burning Snow", team2Score: "2"},
-			{ score: "7", team1: "Boomsquad", team1Score: "5", team2: "Burning Snow", team2Score: "2"},
-			{ score: "8", team1: "Boomsquad", team1Score: "5", team2: "Burning Snow", team2Score: "3"},
-			{ score: "9", team1: "Boomsquad", team1Score: "6", team2: "Burning Snow", team2Score: "3"},
-			{ score: "10", team1: "Boomsquad", team1Score: "7", team2: "Burning Snow", team2Score: "3"},
-			{ score: "11", team1: "Boomsquad", team1Score: "7", team2: "Burning Snow", team2Score: "4"},
-			{ score: "12", team1: "Boomsquad", team1Score: "8", team2: "Burning Snow", team2Score: "4"},
-			{ score: "13", team1: "Boomsquad", team1Score: "8", team2: "Burning Snow", team2Score: "5"},
-			{ score: "14", team1: "Boomsquad", team1Score: "8", team2: "Burning Snow", team2Score: "6"},
-			{ score: "15", team1: "Boomsquad", team1Score: "9", team2: "Burning Snow", team2Score: "6"},
-			{ score: "16", team1: "Boomsquad", team1Score: "9", team2: "Burning Snow", team2Score: "7"},
-			{ score: "17", team1: "Boomsquad", team1Score: "10", team2: "Burning Snow", team2Score: "7"},
-			{ score: "18", team1: "Boomsquad", team1Score: "11", team2: "Burning Snow", team2Score: "7"},
-			{ score: "19", team1: "Boomsquad", team1Score: "12", team2: "Burning Snow", team2Score: "7"},
-			{ score: "20", team1: "Boomsquad", team1Score: "13", team2: "Burning Snow", team2Score: "7"},
-			{ score: "21", team1: "Boomsquad", team1Score: "14", team2: "Burning Snow", team2Score: "7"},
-			{ score: "22", team1: "Boomsquad", team1Score: "14", team2: "Burning Snow", team2Score: "8"},
-			{ score: "23", team1: "Boomsquad", team1Score: "15", team2: "Burning Snow", team2Score: "8"}
-		]	
+
+	'use strict';
+
+	APP.pools = {
+		title: 	'Pools',
 	};
 
-	APP.schedule = {
-		title: 		'Schedule',
-		pageTitle: 	'Pool A - Schedule',
-		schedule:	[
-			{ date: "Monday, 9:00am", team1: "Chasing", team1Score: "13", team2: "Amsterdam Money Gang", team2Score: "9"},
-			{ date: "Monday, 9:00am", team1: "Boomsquad", team1Score: "15", team2: "Beast Amsterdam", team2Score: "11"},
-			{ date: "Monday, 10:00am", team1: "Beast Amsterdam", team1Score: "14", team2: "Amsterdam Money Gang", team2Score: "12"},
-			{ date: "Monday, 10:00am", team1: "Chasing", team1Score: "5", team2: "Burning Snow", team2Score: "15"},
-			{ date: "Monday, 11:00am", team1: "Boomsquad", team1Score: "11", team2: "Amsterdam Money Gang", team2Score: "15"},    
-			{ date: "Monday, 11:00am", team1: "Burning Snow", team1Score: "15", team2: "Beast Amsterdam", team2Score: "6"},
-			{ date: "Monday, 12:00pm", team1: "Chasing", team1Score: "8", team2: "Beast Amsterdam", team2Score: "15"},
-			{ date: "Monday, 12:00pm", team1: "Boomsquad", team1Score: "15", team2: "Burning Snow", team2Score: "8"},
-			{ date: "Monday, 1:00pm", team1: "Chasing", team1Score: "15", team2: "Boomsquad", team2Score: "14"},
-			{ date: "Monday, 1:00pm", team1: "Burning Snow", team1Score: "15", team2: "Amsterdam Money Gang", team2Score: "11"}
-		]	
+	APP.pool = {
+		data:		{}
 	};
 	
-	APP.ranking = {
-		title: 		'Ranking',
-		pageTitle: 	'Pool A - Ranking',
-		ranking:	[
-			{ team: "Chasing", Win: "2", Lost: "2", Sw: "7", Sl: "9", Pw: "35", Pl: "39"},
-			{ team: "Boomsquad", Win: "2", Lost: "2", Sw: "9", Sl: "8", Pw: "36", Pl: "34"},
-			{ team: "Burning Snow", Win: "3", Lost: "1", Sw: "11", Sl: "4", Pw: "36", Pl: "23"},
-			{ team: "Beast Amsterdam", Win: "2", Lost: "2", Sw: "6", Sl: "8", Pw: "30", Pl: "34"},
-			{ team: "Amsterdam Money Gang", Win: "1", Lost: "3", Sw: "6", Sl: "10", Pw: "30", Pl: "37"}
-		]
+	APP.games = {
+		title: 	'Games',
+	};
+	
+	APP.game = {};
+	
+	APP.teams = {
+		title: 	'Teams',
+		data:	{}
+	};
+	
+	APP.tournaments = {
+		title: 	'Tournaments',
+		data: 	{}
 	};
 	
 	APP.controller = {
@@ -75,27 +39,39 @@ var APP = APP || {};
 	APP.router = {
 		init: function () {
 	  		routie({
-			    '/game': function() {
-			    	APP.page.render('game');
+			    '/pools': function() {
+			    	APP.page.render('pools', 'https://api.leaguevine.com/v1/pools/?tournament_id=19389&order_by=[name]&access_token=82996312dc', APP.pools);
 				},
-			    '/schedule': function() {
-			    	APP.page.render('schedule');
+			    '/pool/:id': function(id) {
+			    	APP.page.render('pool', 'https://api.leaguevine.com/v1/games/?pool_id='+id+'&access_token=82996312dc', APP.pool);
+				},
+			    '/games': function() {
+			    	APP.page.render('games', 'https://api.leaguevine.com/v1/game_scores/?tournament_id=19389&access_token=82996312dc', APP.games);
+				},
+			    '/game/:id': function(id) {
+			    	APP.page.render('game', 'https://api.leaguevine.com/v1/games/'+id+'/?access_token=82996312dc', APP.game);
+				},				
+			    '/teams': function() {
+			    	APP.page.render('teams', 'https://api.leaguevine.com/v1/tournament_teams/?tournament_ids=[19389]&order_by=[team_id]&access_token=82996312dc', APP.teams);
 			    },
 
-			    '/ranking': function() {
-			    	APP.page.render('ranking');
-			    },
-			    '*': function() {
-			    	APP.page.render('schedule');
+			    '/tournaments': function() {
+			    	APP.page.render('tournaments', 'https://api.leaguevine.com/v1/tournaments/19389/', APP.tournaments);
 			    }
+			    
 			});
 		},
 		
 		change: function() {
-			var route = window.location.hash.slice(2),
-				sections = qwery('section'),
+			var route = window.location.hash.slice(2);
+
+			if(route.indexOf('/') == 4) {
+				route = route.slice(0,4);
+			}
+			
+			var	sections = qwery('section'),
 				section = qwery('[data-route=' + route + ']')[0];
-		
+				
 			if (section) {
 	        	for (var i=0; i < sections.length; i++){
 	        		sections[i].classList.remove('active');
@@ -110,10 +86,76 @@ var APP = APP || {};
 	};
 	
 	APP.page = {
-		render: function (route) {
-			var data = eval('APP.'+route);
-			Transparency.render(qwery('[data-route='+route+']')[0], data);
-			APP.router.change();
+		render: function (route, url, dataObject) {
+			document.getElementById("floatingBarsG").style.display = 'block';
+			APP.ajax.get(url, dataObject, function() {
+				var data = eval('APP.'+route);
+				// Access token 82996312dc
+				
+				if(route == 'pools') {
+					var directives = {
+						data: {
+							objects: {
+								name: {
+									href: function(params) {
+										return 'index.html#/pool/' + this.id;
+									},
+									text: function() {
+										return 'Pool ' + this.name;
+									}
+								}
+							}
+						}
+					};
+				} else if (route == 'pool') {
+					var directives = {
+						name: {
+							text: function() {
+								return 'Wedstrijden in pool ' + this.data.objects['0'].pool.name;
+							}
+						},
+						data: {
+							objects: {
+								update: {
+									href: function(params) {
+										return 'index.html#/game/' + this.id;
+									},
+									text: function() {
+										return 'Update score';
+									}
+								}
+							}
+						}				
+					};
+				}
+				
+				Transparency.render(qwery('[data-route='+route+']')[0], data, directives);
+				APP.router.change();
+				document.getElementById("floatingBarsG").style.display = 'none';
+			});
+		}
+	}
+	
+	APP.ajax = {
+		get: function(linkurl, obj, callback) {
+			var xmlResponse,
+				type		= 'GET',
+				url			= linkurl,
+				xhr			= new XMLHttpRequest();
+
+			xhr.open(type,url,true);
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200){
+					if(xhr.responseText != null){
+						obj.data = JSON.parse(xhr.responseText);
+						callback.call(obj.data);
+					}
+				}
+			}
+			xhr.send();
+		},
+		post: function() {
+			
 		}
 	}
 
