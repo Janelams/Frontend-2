@@ -51,8 +51,8 @@
 		
 		<div class="container" id="content">
 			<section data-route="tournaments" class="row active">
-				<header>
-					<h1 data-bind="title"></h1>
+				<header class="page-header">
+					<h1>Tournaments</h1>
 				</header>
 				<div data-bind="data">
 					<table class="table table-striped table-hover table-bordered">
@@ -76,12 +76,12 @@
 			
 			
 			<section data-route="pools" class="row">
-				<header>
-					<h1 data-bind="title"></h1>
+				<header class="page-header">
+					<h1>Pools</h1>
 				</header>
 				<div data-bind="data">			
 					<div data-bind="objects">
-						<h1><a data-bind="name"></a></h1>
+						<h3><a data-bind="name"></a></h3>
 						<table class="table table-striped table-hover table-bordered">
 							<thead>	
 								<tr>
@@ -109,10 +109,10 @@
 			</section>
 			
 			<section data-route="pool" class="row">
-				<a href="index.html#/pools">Go back</a>
 				<div data-bind="data">		
-					<header>
+					<header class="page-header">
 						<h1 data-bind="name"></h1>
+						<a href="index.html#/pools">Go back</a>
 					</header>	
 					<table class="table table-striped table-hover table-bordered">
 						<thead>	
@@ -140,7 +140,7 @@
 
 			<section data-route="games" class="row">
 				<div data-bind="data">		
-					<header>
+					<header class="page-header">
 						<h1>All games</h1>
 					</header>	
 					<table class="table table-striped table-hover table-bordered">
@@ -166,11 +166,15 @@
 			
 			<section data-route="game" class="row">
 				<div data-bind="data">		
-					<header>
+					<header class="page-header">
 						<h1><span data-bind="team_1"><span data-bind="name"></span></span> - <span data-bind="team_2"><span data-bind="name"></span></span></h1>
 					</header>	
-					<form class="form" role="form" method="post" action="">
+					<form class="form" role="form" method="post" id="update-score-form" onsubmit="return APP.page.submit();">
 						<div class="form-group">
+							<input type="hidden" id="id">
+							<div data-bind="pool">
+								<input type="hidden" id="pool_id">
+							</div>
 							<input type="number" class="form-control" id="team_1_score" style="float: left; margin-right: 10px;height: 100px; font-size: 40px; width: 150px;">
 							<input type="number" class="form-control" id="team_2_score" style="height: 100px; font-size: 40px; width: 150px;">
 						</div>
@@ -184,7 +188,7 @@
 		
 			<section data-route="teams" class="row">
 				<div data-bind="data">
-					<header data-bind="meta">
+					<header data-bind="meta" class="page-header">
 						<h1><span data-bind="total_count"></span> teams</h1>
 					</header>
 					<table class="table table-striped table-bordered">
@@ -207,6 +211,10 @@
 		</div>
 	
 		<!-- Libraries -->
+			<!-- Bootstrap jquery -->
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+			<!-- Bootstrap -->
+			<script type="text/javascript" src="js/bootstrap.min.js"></script>
 			<!-- DOM Ready -->
 			<script type="text/javascript" src="js/ready.min.js"></script>
 			<!-- Routie object -->

@@ -6,29 +6,17 @@ var APP = APP || {};
 
 	'use strict';
 
-	APP.pools = {
-		title: 	'Pools',
-	};
+	APP.pools = {};
 
-	APP.pool = {
-		data:		{}
-	};
+	APP.pool = {};
 	
-	APP.games = {
-		title: 	'Games',
-	};
+	APP.games = {};
 	
 	APP.game = {};
 	
-	APP.teams = {
-		title: 	'Teams',
-		data:	{}
-	};
+	APP.teams = {};
 	
-	APP.tournaments = {
-		title: 	'Tournaments',
-		data: 	{}
-	};
+	APP.tournaments = {};
 	
 	APP.controller = {
 		init: function() {
@@ -133,17 +121,34 @@ var APP = APP || {};
 				APP.router.change();
 				document.getElementById("floatingBarsG").style.display = 'none';
 			});
+		},
+		submit: function(event) {
+			
+			document.getElementById("floatingBarsG").style.display = 'block';
+			
+			var senddata	=	JSON.stringify({
+									game_id: document.getElementById('id').value,
+									team_1_score: document.getElementById('team_1_score').value,
+									team_2_score: document.getElementById('team_2_score').value,
+									is_final: 'True'
+								}),
+				pool_id		=	document.getElementById('pool_id').value,
+				url			=	"https://api.leaguevine.com/v1/game_scores/";
+			
+			APP.ajax.post(url, senddata, function() {
+				window.location = "index.html#/pool/" + pool_id;
+			});
+			return false;
+			
 		}
 	}
 	
 	APP.ajax = {
 		get: function(linkurl, obj, callback) {
-			var xmlResponse,
-				type		= 'GET',
-				url			= linkurl,
+			var url			= linkurl,
 				xhr			= new XMLHttpRequest();
 
-			xhr.open(type,url,true);
+			xhr.open('GET',url,true);
 			xhr.onreadystatechange = function() {
 				if(xhr.readyState == 4 && xhr.status == 200){
 					if(xhr.responseText != null){
@@ -154,8 +159,15 @@ var APP = APP || {};
 			}
 			xhr.send();
 		},
-		post: function() {
+		post: function(linkurl, senddata, callback) {
+			var url		= linkurl,
+			xhr			= new XMLHttpRequest();
 			
+			xhr.open('POST',url,true);
+			xhr.setRequestHeader('Content-type','application/json');
+			xhr.setRequestHeader('Authorization','bearer 82996312dc');
+			xhr.send(senddata);
+			callback.call();
 		}
 	}
 
