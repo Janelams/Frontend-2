@@ -42,8 +42,10 @@ var APP = APP || {};
 			    '/teams': function() {
 			    	APP.page.render('teams', 'https://api.leaguevine.com/v1/tournament_teams/?tournament_ids=[19389]&order_by=[team_id]&access_token=82996312dc', APP.teams);
 			    },
-
 			    '/tournaments': function() {
+			    	APP.page.render('tournaments', 'https://api.leaguevine.com/v1/tournaments/19389/', APP.tournaments);
+			    },
+			    '*': function() {
 			    	APP.page.render('tournaments', 'https://api.leaguevine.com/v1/tournaments/19389/', APP.tournaments);
 			    }
 			    
@@ -136,7 +138,7 @@ var APP = APP || {};
 				url			=	"https://api.leaguevine.com/v1/game_scores/";
 			
 			APP.ajax.post(url, senddata, function() {
-				window.location = "index.html#/pool/" + pool_id;
+				window.location.href = "index.html#/pool/" + pool_id;
 			});
 			return false;
 			
@@ -166,8 +168,12 @@ var APP = APP || {};
 			xhr.open('POST',url,true);
 			xhr.setRequestHeader('Content-type','application/json');
 			xhr.setRequestHeader('Authorization','bearer 82996312dc');
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 201){
+					callback.call();
+				}
+			}
 			xhr.send(senddata);
-			callback.call();
 		}
 	}
 
