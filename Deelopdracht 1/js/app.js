@@ -5,7 +5,8 @@ var APP = APP || {};
 (function() {
 
 	'use strict';
-
+	
+	// De page objecten defineren
 	APP.pools = {};
 
 	APP.pool = {};
@@ -18,6 +19,7 @@ var APP = APP || {};
 	
 	APP.tournaments = {};
 	
+	// APP controller object
 	APP.controller = {
 		init: function() {
 			APP.router.init();
@@ -26,6 +28,7 @@ var APP = APP || {};
 	
 	APP.router = {
 		init: function () {
+			// Routie zorgt ervoor dat de routes goed worden afgehandeld. Binnen de route functie wordt de page.render function aangehaald met daarin de naam van de route, de desbetreffende Leaguevine API url en het desbetreffende data object.
 	  		routie({
 			    '/pools': function() {
 			    	APP.page.render('pools', 'https://api.leaguevine.com/v1/pools/?tournament_id=19389&order_by=[name]&access_token=82996312dc', APP.pools);
@@ -52,6 +55,7 @@ var APP = APP || {};
 			});
 		},
 		
+		// Als de route veranderd wordt de goede route uit de URL gehaald en de desbetreffende route op active gezet
 		change: function() {
 			var route = window.location.hash.slice(2);
 
@@ -76,12 +80,17 @@ var APP = APP || {};
 	};
 	
 	APP.page = {
+		// De pagina render function (vraagt om de naam van de route, de Leaguevine API url en het dataobject van de desbetreffende pagina)
 		render: function (route, url, dataObject) {
+		
+			// Laat de loader zien om aan te geven dat het systeem bezig is met data verwerken
 			document.getElementById("floatingBarsG").style.display = 'block';
+			
+			// De get request method van het App.ajax object wordt hier aangevraagd waarin de Leaguevine API url en het pagina object wordt doorgegeven. Daarna komt de callback functie die wordt geinitialiseerd zodra de get method een response heeft van de Leaguevine API.
 			APP.ajax.get(url, dataObject, function() {
 				var data = eval('APP.'+route);
-				// Access token 82996312dc
 				
+				// Als de route 'pools' is, geef dan aan de transparancy functie een aantal directives mee om de goede pool-ID in de URL te zetten voor de individuele pool linkjes
 				if(route == 'pools') {
 					var directives = {
 						data: {
@@ -97,7 +106,9 @@ var APP = APP || {};
 							}
 						}
 					};
-				} else if (route == 'pool') {
+				}
+				// Als de route 'pool' is, geef dan aan de transparancy functie een aantal directives mee om de goede game-ID in de URL te zetten voor de individuele game linkjes 
+				else if (route == 'pool') {
 					var directives = {
 						name: {
 							text: function() {
@@ -119,15 +130,23 @@ var APP = APP || {};
 					};
 				}
 				
+				// De Transparancy library zorgt ervoor dat de opgehaalde data van de Leaguevine API bij de goede elementen wordt gebind.
 				Transparency.render(qwery('[data-route='+route+']')[0], data, directives);
+				
+				// Verander vervolgens de active class om de nieuwe gegenereerde pagina te laten zien.
 				APP.router.change();
+				
+				// Laat de loader verdwijnen, de pagina is klaar met laden.
 				document.getElementById("floatingBarsG").style.display = 'none';
 			});
 		},
+		// Zodra de game-score wordt gesubmit wordt deze method aangehaald om de score-submit actie te verwerken
 		submit: function(event) {
-			
+		
+			// Laat de loader zien om aan te geven dat het systeem bezig is met data verwerken
 			document.getElementById("floatingBarsG").style.display = 'block';
 			
+			// Zet de data klaar om naar de Leaguevine API te sturen.
 			var senddata	=	JSON.stringify({
 									game_id: document.getElementById('id').value,
 									team_1_score: document.getElementById('team_1_score').value,
@@ -137,15 +156,18 @@ var APP = APP || {};
 				pool_id		=	document.getElementById('pool_id').value,
 				url			=	"https://api.leaguevine.com/v1/game_scores/";
 			
+			// De post request method van het App.ajax object wordt hier aangevraagd om de data naar de Leaguevine API te sturen. Zodra er een response is wordt de browser geredirected naar de pool overzichtspagina
 			APP.ajax.post(url, senddata, function() {
 				window.location.href = "index.html#/pool/" + pool_id;
 			});
-			return false;
 			
+			// Return false zorgt ervoor dat de browser de request niet op de standaard  manier verwerkt verder.
+			return false;		
 		}
 	}
 	
 	APP.ajax = {
+		// Get request via XMLHttpRequest
 		get: function(linkurl, obj, callback) {
 			var url			= linkurl,
 				xhr			= new XMLHttpRequest();
@@ -161,6 +183,7 @@ var APP = APP || {};
 			}
 			xhr.send();
 		},
+		// Post request via XMLHttpRequest
 		post: function(linkurl, senddata, callback) {
 			var url		= linkurl,
 			xhr			= new XMLHttpRequest();
@@ -178,8 +201,10 @@ var APP = APP || {};
 	}
 
 	domready(function () {
+		// App initialiseren
 		APP.controller.init();
-
+		
+		// Tap gestures om score makkelijk aan te passen
 		$$('#team_1_score').singleTap(function(){
 			document.getElementById("team_1_score").value ++;
 		});
