@@ -178,6 +178,8 @@ var APP = APP || {};
 	}
 
 	domready(function () {
+		APP.controller.init();
+
 		$$('#team_1_score').singleTap(function(){
 			document.getElementById("team_1_score").value ++;
 		});
@@ -185,8 +187,5 @@ var APP = APP || {};
 		$$('#team_2_score').singleTap(function(){
 			document.getElementById("team_2_score").value ++;
 		});
-		
-
-		APP.controller.init();
 	});
 })();
